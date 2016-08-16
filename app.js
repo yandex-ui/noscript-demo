@@ -26,7 +26,7 @@ ns.layout.define('photo', {
         return params['image-id']
             ? { 'photos': null, 'photo-preview': null }
             // чтобы увидеть разницу — нужно добавить &
-            : { 'photos': null, 'async-view&': null };
+            : { 'photos': null, 'async-view&': 'async-view-inner' };
     }
 }, 'app');
 
@@ -106,12 +106,6 @@ ns.View.define('async-view', {
         return {
             I_AM_ASYNC_VIEW: 1
         };
-    },
-
-    methods: {
-        patchLayout: function() {
-            return 'async-view';
-        }
     }
 });
 
