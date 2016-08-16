@@ -51,3 +51,19 @@ match .photo-preview ns-view-content {
     <br/>
     <img src="{ model('photo').url_ }L"/>
 }
+
+match .async-view ns-view-async-content {
+    "Загружается..."
+}
+
+match .async-view ns-view-content {
+    apply /.views.* ns-view
+}
+
+match .async-view-inner ns-view-content {
+    if /.params.I_AM_ASYNC_VIEW {
+        "Это был локальный апдейт на асинхронной вьюшке. Я смог это понять, потому что вьюшка получила параметр I_AM_ASYNC_VIEW от родителя."
+    } else {
+        "Это был глобальный апдейт. Я смог это понять, потому что вьюшка получила только глобальные параметры страницы в апдейте, и не смогла найти там параметры родителя."
+    }
+}

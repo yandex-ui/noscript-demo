@@ -25,9 +25,14 @@ ns.layout.define('photo', {
     'app content@': function(params) {
         return params['image-id']
             ? { 'photos': null, 'photo-preview': null }
-            : { 'photos': null };
+            // чтобы увидеть разницу — нужно добавить &
+            : { 'photos': null, 'async-view&': null };
     }
 }, 'app');
+
+ns.layout.define('async-view', {
+    'async-view-box@': 'async-view-inner'
+});
 
 // ----------------------------------------------------------------------------------------------------------------- //
 
@@ -44,6 +49,18 @@ ns.Model.define('photos', {
         model_id: 'photo',
         params: {
             'id': '.id'
+        }
+    }
+});
+
+ns.Model.define('async-model', {
+    methods: {
+        request: function() {
+            var _this = this;
+
+            return Promise.resolve().then(function() {
+                _this.setData({});
+            });
         }
     }
 });
@@ -70,6 +87,46 @@ ns.ViewCollection.define('photos', {
 
 ns.View.define('photo-preview', {
     models: [ 'photo' ]
+});
+
+/**
+ * Первый глобальный апдейт кладет в лейауте async-view,
+ * которая рисует прелоадер в асинхронной моде
+ * После получения данных — мы проверяем нужно ли показать вьюшку async-view-inner
+ *(для теста всегда вернет лейат async-view, который содержит эту вьюшку)
+ */
+ns.View.define('async-view', {
+    models: [ 'async-model' ],
+
+    /**
+     * Нужно обратить внимание:
+     * вьюшка вычисляет себе какие-то параметры
+     */
+    params: function() {
+        return {
+            I_AM_ASYNC_VIEW: 1
+        };
+    },
+
+    methods: {
+        patchLayout: function() {
+            return 'async-view';
+        }
+    }
+});
+
+/**
+ * Это вьюшка вложенная в async-view
+ */
+ns.View.define('async-view-inner', {
+    /**
+     * Здесь нужно обратить внимание:
+     * вьюшка добавляем себе параметры — именно здесь и будет отличие
+     * глобального апдейта от локального на асинхронной вьюшке
+     */
+    'params+': {
+        I_AM_ASYNC_VIEW: null
+    }
 });
 
 // ----------------------------------------------------------------------------------------------------------------- //
