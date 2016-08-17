@@ -1,3 +1,5 @@
+ns.DEBUG = true;
+
 // Урлы.
 ns.router.routes = {
     route: {
@@ -17,8 +19,20 @@ ns.layout.define('app', {
     }
 });
 
+var counter = 0;
 ns.layout.define('index', {
-    'app content@': 'index'
+    'app content@': function() {
+        return {
+            /**
+             * Опасная тема:
+             * детки вьюшки определяется за счет каких-то внешних условий,
+             * а не параметров страницы
+             * Соответственно, в новом апдейте экземпляр foo-wrapper
+             * останется тот же, а детки поменяются — это снесет крышу апдейту
+             */
+            'foo-wrapper': ++counter % 2 ? 'foo-1' : 'foo-2'
+        };
+    }
 }, 'app');
 
 ns.layout.define('photo', {
@@ -71,6 +85,10 @@ ns.ViewCollection.define('photos', {
 ns.View.define('photo-preview', {
     models: [ 'photo' ]
 });
+
+ns.View.define('foo-wrapper');
+ns.View.define('foo-1');
+ns.View.define('foo-2');
 
 // ----------------------------------------------------------------------------------------------------------------- //
 
