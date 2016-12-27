@@ -26,10 +26,35 @@ match .index ns-view-content {
 }
 
 // 2. Photo list page.
+
+// Special wrapper.
+// Used to pass extra parameter to nested photos view.
+match .photos-extra ns-view-desc {
+    apply /.views.photos ns-view ( 1 )
+}
+
+// Override default template - add parameter for customization with default value set.
+// We cannot call ns-view-call-scalar here directly because we here / is set to
+// caller root (in our case / === photos-extra).
+// So we pass extra parameter deeper.
+match .photos ns-view (scalar extra = 0) {
+    apply document(.).tree.* ns-build-view (extra)
+}
+
+// Override default template and add extra parameter here also.
+// So here we can call view method and remember that this is a special view instance.
+match .photos ns-build-view (scalar extra = 0) {
+    ns-view-call-scalar('setExtraOnce', extra)
+    <div>
+        apply . ns-build-view-content
+    </div>
+}
+
 match .photos ns-view-collection {
     "К примеру, вот фотки:"
     <br/>
     apply /.views.ns-view-collection-container.* ns-view
+    " [extra={ns-view-call-scalar('getExtra')}]"
 }
 
 match .photos-item ns-view-add-class {

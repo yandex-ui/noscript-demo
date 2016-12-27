@@ -18,7 +18,14 @@ ns.layout.define('app', {
 });
 
 ns.layout.define('index', {
-    'app content@': 'index'
+    // 'app content@': 'index'
+    // Demo for the same view (photos) used twice in the same layout.
+    'app content@': {
+        'photos-extra': {
+            'photos': {}
+        },
+        'photos': {}
+    }
 }, 'app');
 
 ns.layout.define('photo', {
@@ -65,12 +72,24 @@ ns.ViewCollection.define('photos', {
     split: {
         byModel: 'photos',
         intoViews: 'photos-item'
+    },
+    methods: {
+        setExtraOnce: function(extra) {
+            if (typeof this._extra === 'undefined') {
+                this._extra = extra;
+            }
+        },
+        getExtra: function() {
+            return this._extra;
+        }
     }
 });
 
 ns.View.define('photo-preview', {
     models: [ 'photo' ]
 });
+
+ns.View.define('photos-extra');
 
 // ----------------------------------------------------------------------------------------------------------------- //
 
