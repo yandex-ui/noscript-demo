@@ -18,7 +18,10 @@ ns.layout.define('app', {
 });
 
 ns.layout.define('index', {
-    'app content@': 'index'
+    'app content@': {
+        'photos-top-wrap': {},
+        'photos-wrap': {}
+    }
 }, 'app');
 
 ns.layout.define('photo', {
@@ -28,6 +31,10 @@ ns.layout.define('photo', {
             : { 'photos': null };
     }
 }, 'app');
+
+ns.layout.define('photos-extra-layout', {
+    'photobox@': 'photos'
+});
 
 // ----------------------------------------------------------------------------------------------------------------- //
 
@@ -61,6 +68,7 @@ ns.View.define('photos-item', {
 });
 
 ns.ViewCollection.define('photos', {
+    params: { extra: null },
     models: [ 'photos' ],
     split: {
         byModel: 'photos',
@@ -71,6 +79,25 @@ ns.ViewCollection.define('photos', {
 ns.View.define('photo-preview', {
     models: [ 'photo' ]
 });
+
+ns.View.define('photos-top-wrap', {
+    methods: {
+        patchLayout: function(params) {
+            params.extra = 'top';
+            return 'photos-extra-layout';
+        }
+    }
+});
+
+ns.View.define('photos-wrap', {
+    methods: {
+        patchLayout: function(params) {
+            params.extra = '';
+            return 'photos-extra-layout';
+        }
+    }
+});
+
 
 // ----------------------------------------------------------------------------------------------------------------- //
 

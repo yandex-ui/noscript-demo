@@ -30,6 +30,9 @@ match .photos ns-view-collection {
     "К примеру, вот фотки:"
     <br/>
     apply /.views.ns-view-collection-container.* ns-view
+    " [extra: { /.params.extra } id: { /.key }]"
+    // log(/.params)
+    // log(/)
 }
 
 match .photos-item ns-view-add-class {
