@@ -1,6 +1,7 @@
 module "main"
 
 include "node_modules/noscript/yate/noscript.yate"
+include "node_modules/noscript-bosphorus/noscript-bosphorus.yate"
 
 match .head ns-view-add-class {
     " island head"
