@@ -29,6 +29,8 @@ match .photos ns-view-collection {
     "К примеру, вот фотки:"
     <br/>
     apply /.views.ns-view-collection-container.* ns-view
+
+    <a href="{ ns-url('/') }">home</a>
 }
 
 match .photos-item ns-view-add-class {
@@ -51,3 +53,10 @@ match .photo-preview ns-view-content {
     <br/>
     <img src="{ model('photo').url_ }L"/>
 }
+
+
+match .test-view ns-view-content {
+    "TEST VIEW"
+}
+
+

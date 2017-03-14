@@ -13,12 +13,15 @@ ns.router.routes = {
 ns.layout.define('app', {
     'app': {
         'head': true,
-        'content@': {}
+        'content@': {},
+        'box1@': {},
+        'box2@': {}
     }
 });
 
 ns.layout.define('index', {
-    'app content@': 'index'
+    'app content@': 'index',
+    'app box1@': 'test-view'
 }, 'app');
 
 ns.layout.define('photo', {
@@ -26,7 +29,8 @@ ns.layout.define('photo', {
         return params['image-id']
             ? { 'photos': null, 'photo-preview': null }
             : { 'photos': null };
-    }
+    },
+    'app box2@': 'test-view'
 }, 'app');
 
 // ----------------------------------------------------------------------------------------------------------------- //
@@ -55,6 +59,8 @@ ns.View.define('app');
 ns.View.define('head');
 
 ns.View.define('index');
+
+ns.View.define('test-view');
 
 ns.View.define('photos-item', {
     models: [ 'photo' ]

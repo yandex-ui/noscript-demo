@@ -1,0 +1,18 @@
+module "main"
+
+include "../node_modules/noscript/yate/noscript.yate"
+
+match .head ns-view-add-class {
+    " island head"
+}
+match .head ns-view-content {
+    "Шапка: она не меняется от страницы к странице"
+}
+
+match .content ns-view-add-class {
+    " island"
+}
+
+match .clock ns-view-content {
+    model('clock').time
+}

@@ -3,9 +3,12 @@ YATE = node_modules/.bin/yate
 
 all: yate css
 
-yate: templates.yate.js
+yate: templates.yate.js demo01/templates.yate.js
 
 templates.yate.js: templates.yate
+	$(YATE) $< > $@
+
+demo01/templates.yate.js: demo01/templates.yate
 	$(YATE) $< > $@
 
 css: all.css
