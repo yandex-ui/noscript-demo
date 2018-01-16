@@ -1,3 +1,13 @@
+// ns.DEBUG = 1;
+
+// Log errors to console.
+ns.log.exception = function(name, exception, data) {
+    alert('ahhh');
+    console.log('ns.log.exception', arguments);
+};
+
+// ----------------------------------------------------------------------------------------------------------------- //
+
 // Урлы.
 ns.router.routes = {
     route: {
